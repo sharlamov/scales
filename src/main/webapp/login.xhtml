@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF8" />
+	<title>Transoil Group</title>
+	<h:outputStylesheet library="css" name="common.css" />
+</h:head>
+<h:body
+	style="background-image: url(resources/images/sunflower.jpg); background-size: cover;">
+
+	<div class="wrapper">
+
+		<h:form id="loginFormId" prependId="false">
+			<h:outputLink value="javascript:void(0)" onclick="PF('dlg').show();"
+				title="Intrare">
+				<h:graphicImage style="position:absolute;left:20px;top:20px;"
+					library="images" name="user_login-icon.gif" width="40" height="40" />
+			</h:outputLink>
+
+			<p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+
+			<p:dialog header="Intrare" widgetVar="dlg" resizable="false">
+
+				<h:panelGrid columns="3" cellpadding="5">
+					<h:outputText id="outTxtUserNameId" value="Nume: "
+						name="outTxtUserNameNm"></h:outputText>
+					<h:inputText id="userName" required="true"
+						value="#{authenticationBean.userName}"
+						requiredMessage="Introduceti va rog nume"></h:inputText>
+					<h:outputLabel id="outLblUserNameId" for="userName"
+						name="outLblUserNameNm"></h:outputLabel>
+
+					<h:outputText id="outTxtPasswordId" value="Parola: "
+						name="outTxtPasswordNm"></h:outputText>
+					<p:password id="password" required="true"
+						value="#{authenticationBean.password}"
+						requiredMessage="Introduceti va rog parola" name="inTxtPasswordNm"></p:password>
+					<h:outputLabel id="outLblPasswordId" for="password"
+						name="outLblPasswordNm"></h:outputLabel>
+					<f:facet name="footer">
+						<p:commandButton id="btnLoginId" value="OK"
+							icon="ui-icon-check" style="margin:0"
+							actionListener="#{authenticationBean.login}" update="growl"
+							oncomplete="handleLoginRequest(xhr, status, args)" />
+
+					</f:facet>
+
+				</h:panelGrid>
+			</p:dialog>
+		</h:form>
+	</div>
+
+	<script type="text/javascript">
+		function handleLoginRequest(xhr, status, args) {
+			if (args.validationFailed || !args.loggedIn) {
+				PF('dlg').jq.effect("shake", {
+					times : 5
+				}, 100);
+			} else {
+				PF('dlg').hide();
+				$('#loginLink').fadeOut();
+				window.location.replace("iesiri.xhtml");
+			}
+		}
+	</script>
+
+</h:body>
+</html>

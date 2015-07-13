@@ -1,0 +1,217 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:tp="http://java.sun.com/jsf/composite/components"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+<h:head>
+	<title>Transoil Group</title>
+	<h:outputScript library="js" name="common.js" />
+	<h:outputStylesheet library="css" name="common.css" />
+</h:head>
+<h:body>
+	<f:event type="preRenderView" listener="#{scalesBeanOut.init}"
+		update=":form:panel" />
+	<h:form id="form" autocomplete="off">
+		<p:growl id="msgs" showDetail="true" />
+
+		<div
+			style="border: 1px solid #cccccc; background: #424548; margin-bottom: 10px; border-radius: 5px; color:#F9F7F7;">
+			<span style="font-size: 25px; font-weight: bold; margin-left: 10px;">Bascula</span>
+		</div>
+
+		<div
+			style="border: 1px solid #cccccc; background: #F2F1F1 repeat-x scroll 0 0; margin-bottom: 10px; border-radius: 5px;">
+			<table border="0" width="100%">
+				<tr>
+					<td width="40%"><tp:detailPanel customBean="#{scalesBeanOut}" /></td>
+					<td style="margin: 20px; float: right;"><ui:include
+							src="templates/menu.xhtml" /></td>
+				</tr>
+			</table>
+		</div>
+
+		<p:panel id="data" header="Cantar Iesiri Auto"
+			style="margin-bottom:10px;">
+
+			<p:dataTable var="scale" value="#{scalesBeanOut.scalesList}"
+				rows="10" id="table" editable="true" paginator="true"
+				
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				selection="#{scalesBeanOut.selectedScale}" rowKey="#{scale.id}">
+
+				<p:column headerText="Conducator auto" style="width:5%;">
+					<h:outputText value="#{scale.conducator}" />
+				</p:column>
+
+				<p:column headerText="Auto" style="width:5%;">
+					<h:outputText value="#{scale.auto}" />
+				</p:column>
+				<p:column headerText="Remorca" style="width:5%;">
+					<h:outputText value="#{scale.remorca}" />
+				</p:column>
+				<p:column headerText="Transportator">
+					<h:outputText value="#{scale.transportator.label}" />
+				</p:column>
+				<p:column headerText="Destinatar">
+					<h:outputText value="#{scale.destinatar.label}" />
+				</p:column>
+				<p:column headerText="Punctul de sosire">
+					<h:outputText value="#{scale.punctulSosire.label}" />
+				</p:column>
+				<p:column headerText="Statia de destinatie">
+					<h:outputText value="#{scale.statiaDestinatie.label}" />
+				</p:column>
+				<p:column headerText="Tipul de cereale" style="width:5%;">
+					<h:outputText value="#{scale.tipulCereale.label}" />
+				</p:column>
+				<p:column headerText="Aviz seria/№" style="width:5%;">
+					<h:outputText value="#{scale.ttnNumber}" />
+				</p:column>
+				<p:column headerText="Aviz data" style="width:4%;">
+					<h:outputText value="#{scale.ttnData}">
+						<f:convertDateTime pattern="dd.MM.yyyy" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Nr. Analize" style="width:3%;">
+					<h:outputText value="#{scale.nrAnaliz}" />
+				</p:column>
+				<p:column headerText="Bruto" style="width:3%;">
+					<h:outputText value="#{scale.masaBruto}" />
+				</p:column>
+				<p:column headerText="Тara" style="width:3%;">
+					<h:outputText value="#{scale.masaTara}" />
+				</p:column>
+				<p:column headerText="Netto" style="width:3%;">
+					<h:outputText value="#{scale.masaNeto}" />
+				</p:column>
+				<p:column headerText="Actions" style="text-align: center;width:3%;">
+					<p:commandButton icon="ui-icon-pencil" title="Editare"
+						oncomplete="setDialogName('Editare'); PF('editDialog').show();"
+						immediate="true" update=":formDlg1:editDialog" process="@this"
+						global="false">
+						<f:setPropertyActionListener value="#{scale}"
+							target="#{scalesBeanOut.selectedScale}" />
+					</p:commandButton>
+					<f:facet name="footer">
+						<p:commandButton id="addButton" icon="ui-icon-plus"
+							styleClass="regCommandButton"
+							oncomplete="setDialogName('Adauga'); PF('editDialog').show();"
+							update=":formDlg1:editDialog" process="@this" global="false">
+							<f:setPropertyActionListener value="#{scalesBeanOut.newScale}"
+								target="#{scalesBeanOut.selectedScale}" />
+						</p:commandButton>
+					</f:facet>
+				</p:column>
+
+			</p:dataTable>
+		</p:panel>
+	</h:form>
+	<h:form id="formDlg1">
+		<p:dialog header="Edit" id="editDialog" widgetVar="editDialog"
+			modal="true" showEffect="explode" hideEffect="explode"
+			resizable="false" closeOnEscape="true">
+			<p:outputPanel id="scaleDetail" class="editForm">
+				<p:panelGrid columns="2" columnClasses="label slabel,value">
+
+					<h:outputText value="Conducator auto" />
+					<p:inputText value="#{scalesBeanOut.selectedScale.conducator}" />
+
+					<h:outputText value="Auto" />
+					<p:inputText value="#{scalesBeanOut.selectedScale.auto}" />
+
+					<h:outputText value="Remorca" />
+					<p:inputText value="#{scalesBeanOut.selectedScale.remorca}" />
+
+					<h:outputText value="Transportator" />
+					<p:autoComplete
+						value="#{scalesBeanOut.selectedScale.transportator}"
+						completeMethod="#{scalesBeanOut.completeTransportList}" var="item"
+						itemLabel="#{item.label}" itemValue="#{item}"
+						converter="customItemConverter">
+					</p:autoComplete>
+
+					<h:outputText value="Destinatar" />
+					<p:autoComplete value="#{scalesBeanOut.selectedScale.destinatar}"
+						completeMethod="#{scalesBeanOut.completeDestinatarList}"
+						var="item" itemLabel="#{item.label}" itemValue="#{item}"
+						converter="customItemConverter">
+					</p:autoComplete>
+
+					<h:outputText value="Punctul de sosire" />
+					<p:autoComplete
+						value="#{scalesBeanOut.selectedScale.punctulSosire}"
+						completeMethod="#{scalesBeanOut.completePunctulList}" var="item"
+						forceSelection="true" itemLabel="#{item.label}"
+						itemValue="#{item}" converter="customItemConverter">
+					</p:autoComplete>
+
+					<h:outputText value="Statia de destinatie" />
+					<p:autoComplete
+						value="#{scalesBeanOut.selectedScale.statiaDestinatie}"
+						completeMethod="#{scalesBeanOut.completePunctulList}" var="item"
+						forceSelection="true" itemLabel="#{item.label}"
+						itemValue="#{item}" converter="customItemConverter">
+					</p:autoComplete>
+
+					<h:outputText value="Tipul de cereale" />
+					<p:autoComplete value="#{scalesBeanOut.selectedScale.tipulCereale}"
+						completeMethod="#{scalesBeanOut.completeTipulList}" var="item"
+						forceSelection="true" itemLabel="#{item.label}"
+						itemValue="#{item}" converter="customItemConverter">
+					</p:autoComplete>
+
+					<h:outputText value="Aviz seria/№" />
+					<p:inputText value="#{scalesBeanOut.selectedScale.ttnNumber}" />
+
+					<h:outputText value="Aviz data" />
+					<p:calendar value="#{scalesBeanOut.selectedScale.ttnData}"
+						pattern="dd.MM.yyyy" readonlyInput="true">
+						<f:convertDateTime pattern="dd.MM.yyyy" />
+					</p:calendar>
+
+					<h:outputText value="Nr. Analize" />
+					<p:inputText value="#{scalesBeanOut.selectedScale.nrAnaliz}">
+						<pe:keyFilter regEx="/[\d\-]/" />
+					</p:inputText>
+
+					<h:outputText value="Bruto, kg" />
+					<p:inputText id="fbruto" style="font-size: 15px ;"
+						value="#{scalesBeanOut.selectedScale.masaBruto}">
+						<p:ajax event="keyup" update=":formDlg1:fnetto" global="false"
+							process=":formDlg1:editDialog" />
+						<pe:keyFilter regEx="/[\d\-\.]/" />
+					</p:inputText>
+
+					<h:outputText value="Тara, kg" />
+					<p:inputText id="ftara" style="font-size: 15px ;"
+						value="#{scalesBeanOut.selectedScale.masaTara}">
+						<p:ajax event="keyup" update=":formDlg1:fnetto" global="false"
+							process=":formDlg1:editDialog" />
+						<pe:keyFilter regEx="/[\d\-\.]/" />
+					</p:inputText>
+
+					<h:outputText value="Netto, kg" />
+					<h:outputText id="fnetto"
+						value="#{scalesBeanOut.selectedScale.masaNeto}"
+						style="font-weight: bold; font-size: 15px ;" />
+				</p:panelGrid>
+
+			</p:outputPanel>
+			<hr />
+			<p:commandButton value="Salvare"
+				oncomplete="if (!args.validationFailed) PF('editDialog').hide()"
+				actionListener="#{scalesBeanOut.saveScale}"
+				update=":form:table :form:msgs" process=":formDlg1:editDialog" />
+			<p:commandButton value="Anulare" onclick="PF('editDialog').hide()"
+				immediate="true" global="false" process=":formDlg1:editDialog">
+			</p:commandButton>
+
+		</p:dialog>
+	</h:form>
+</h:body>
+</html>

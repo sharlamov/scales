@@ -1,0 +1,95 @@
+package net.scales.model;
+
+import java.util.Collection;
+import java.util.Set;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+public class CustomUser implements UserDetails {
+
+	private static final long serialVersionUID = -8055629994460003294L;
+
+	private Long id;
+	private String username;
+	private String password;
+	private CustomItem elevator;
+	private CustomItem div;
+	private Integer scaleType;
+	private Set<GrantedAuthority> authorities;
+
+	public void setUsername(String str) {
+		username = str;
+	}
+
+	public void setPassword(String str) {
+		password = str;
+	}
+
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return authorities;
+	}
+
+	public void setCustomerAuthorities(Set<GrantedAuthority> roles) {
+		authorities = roles;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	public boolean isEnabled() {
+		return true;
+	}
+
+	public CustomItem getElevator() {
+		return elevator;
+	}
+
+	public void setElevator(CustomItem elevator) {
+		this.elevator = elevator;
+	}
+
+	public Integer getScaleType() {
+		return scaleType;
+	}
+
+	public void setScaleType(Integer scaleType) {
+		this.scaleType = scaleType;
+	}
+
+	public CustomItem getDiv() {
+		return div;
+	}
+
+	public void setDiv(CustomItem div) {
+		this.div = div;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+}
