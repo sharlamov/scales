@@ -40,7 +40,8 @@
 
 			<p:dataTable var="scale" value="#{scalesBeanOut.scalesList}"
 				rows="10" id="table" editable="true" paginator="true"
-				
+				currentPageReportTemplate="{currentPage} din {totalPages}"
+				emptyMessage="Nu exista date"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				selection="#{scalesBeanOut.selectedScale}" rowKey="#{scale.id}">
 
@@ -80,13 +81,13 @@
 				<p:column headerText="Nr. Analize" style="width:3%;">
 					<h:outputText value="#{scale.nrAnaliz}" />
 				</p:column>
-				<p:column headerText="Bruto" style="width:3%;">
+				<p:column headerText="Bruto" style="width:5%;">
 					<h:outputText value="#{scale.masaBruto}" />
 				</p:column>
-				<p:column headerText="Тara" style="width:3%;">
+				<p:column headerText="Тara" style="width:5%;">
 					<h:outputText value="#{scale.masaTara}" />
 				</p:column>
-				<p:column headerText="Netto" style="width:3%;">
+				<p:column headerText="Netto" style="width:5%;">
 					<h:outputText value="#{scale.masaNeto}" />
 				</p:column>
 				<p:column headerText="Actions" style="text-align: center;width:3%;">
@@ -170,7 +171,7 @@
 
 					<h:outputText value="Aviz data" />
 					<p:calendar value="#{scalesBeanOut.selectedScale.ttnData}"
-						pattern="dd.MM.yyyy" readonlyInput="true">
+						pattern="dd.MM.yyyy" readonlyInput="true" locale="ro">
 						<f:convertDateTime pattern="dd.MM.yyyy" />
 					</p:calendar>
 

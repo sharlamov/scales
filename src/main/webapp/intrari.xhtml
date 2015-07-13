@@ -37,7 +37,8 @@
 		<p:panel id="data" header="Cantar Intrari Auto"
 			style="margin-bottom:10px;">
 			<p:dataTable var="scale" value="#{scalesBeanIn.scalesList}" rows="10"
-				id="table" editable="true"
+				currentPageReportTemplate="{currentPage} din {totalPages}"
+				id="table" editable="true" emptyMessage="Nu exista date"
 				rowStyleClass="#{scalesBeanIn.bgcolor(scale)}" paginator="true"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				selection="#{scalesBeanIn.selectedScale}" rowKey="#{scale.id}">
@@ -80,13 +81,13 @@
 				<p:column headerText="Transportator">
 					<h:outputText value="#{scale.transportator.label}" />
 				</p:column>
-				<p:column headerText="Bruto" style="width:3%;">
+				<p:column headerText="Bruto" style="width:5%;">
 					<h:outputText value="#{scale.masaBruto}" />
 				</p:column>
-				<p:column headerText="Тara" style="width:3%;">
+				<p:column headerText="Тara" style="width:5%;">
 					<h:outputText value="#{scale.masaTara}" />
 				</p:column>
-				<p:column headerText="Netto" style="width:3%;">
+				<p:column headerText="Netto" style="width:5%;">
 					<h:outputText value="#{scale.masaNeto}" />
 				</p:column>
 				<p:column headerText="Actions" style="text-align: center;width:3%;">
