@@ -4,8 +4,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
-import net.scales.model.ScalesData;
-import net.scales.service.ScalesDataService;
+import net.scales.model.Scales;
+import net.scales.service.ScaleService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,11 +19,11 @@ public class GreetingController {
     private final AtomicLong counter = new AtomicLong();
     
     @Autowired
-    private ScalesDataService scalesDataService;
+    private ScaleService scaleService;
 
     @RequestMapping("/greeting")
-    public List<ScalesData> greeting(@RequestParam(value="name", defaultValue="World") String name) {
-    	List<ScalesData> scales = scalesDataService.getScalesInByPeriod(new Date(0), new Date()); 
+    public List<Scales> greeting(@RequestParam(value="name", defaultValue="World") String name) {
+    	List<Scales> scales = scaleService.getScalesInByPeriod(new Date(0), new Date()); 
         return scales;
     }
 }

@@ -5,7 +5,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-import net.scales.dao.ScalesDataDAO;
+import net.scales.dao.ScaleDAO;
 import net.scales.model.CustomItem;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class CustomItemConverter implements Converter {
 
 	@Autowired
-	private ScalesDataDAO scalesDataDAO;
+	private ScaleDAO scalesDataDAO;
 
 	public Object getAsObject(FacesContext fc, UIComponent uic, String value) {
 		try{

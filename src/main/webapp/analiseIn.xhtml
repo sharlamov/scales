@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:tp="http://java.sun.com/jsf/composite/components"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+<h:head>
+	<title>Transoil Group</title>
+	<h:outputScript library="js" name="common.js" />
+	<h:outputStylesheet library="css" name="common.css" />
+</h:head>
+<h:body>
+	<f:event type="preRenderView" listener="#{laborBeanIn.init}"
+		update=":form:panel" />
+	<h:form id="form" autocomplete="off">
+		<p:growl id="msgs" showDetail="true" />
+
+		<div
+			style="border: 1px solid #cccccc; background: #424548; margin-bottom: 10px; border-radius: 5px; color:#F9F7F7;">
+			<span style="font-size: 25px; font-weight: bold; margin-left: 10px;">Bascula</span>
+		</div>
+
+		<div
+			style="border: 1px solid #cccccc; background: #F2F1F1 repeat-x scroll 0 0; margin-bottom: 10px; border-radius: 5px;">
+			<table border="0" width="100%">
+				<tr>
+					<td width="40%"><tp:detailPanel customBean="#{laborBeanIn}" /></td>
+					<td style="margin: 20px; float: right;"><ui:include
+							src="templates/menu.xhtml" /></td>
+				</tr>
+			</table>
+		</div>
+
+		<p:panel id="data" header="Analizele de intrare"
+			style="margin-bottom:10px;">
+
+			<p:dataTable var="labor" value="#{laborBeanIn.laborList}"
+				rows="10" id="table" editable="true" paginator="true"
+				currentPageReportTemplate="{currentPage} din {totalPages}"
+				emptyMessage="Nu exista date"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				selection="#{laborBeanIn.selectedLabor}" rowKey="#{labor.nrAnaliz}">
+
+				<p:column headerText="№ Analiza">
+					<h:outputText value="#{labor.nrAnaliz}" />
+				</p:column>
+			</p:dataTable>
+		</p:panel>
+	</h:form>
+</h:body>
+</html>

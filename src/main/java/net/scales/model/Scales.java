@@ -2,7 +2,7 @@ package net.scales.model;
 
 import java.util.Date;
 
-public class ScalesData {
+public class Scales {
 
 	private Long id;
 	private String conducator;

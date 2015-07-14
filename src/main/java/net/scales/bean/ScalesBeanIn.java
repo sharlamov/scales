@@ -11,8 +11,8 @@ import javax.faces.context.FacesContext;
 
 import net.scales.model.CustomItem;
 import net.scales.model.CustomUser;
-import net.scales.model.ScalesData;
-import net.scales.service.ScalesDataService;
+import net.scales.model.Scales;
+import net.scales.service.ScaleService;
 
 @ManagedBean(name = "scalesBeanIn")
 @ViewScoped
@@ -21,11 +21,11 @@ public class ScalesBeanIn extends AbstractBean {
 	private static final long serialVersionUID = 1L;
 
 	@ManagedProperty(value = "#{scalesDataServiceImpl}")
-	private ScalesDataService scalesDataService;
+	private ScaleService scalesDataService;
 
-	private List<ScalesData> scalesList;
+	private List<Scales> scalesList;
 
-	private ScalesData selectedScale;
+	private Scales selectedScale;
 
 	private CustomItem selectedItem;
 	
@@ -48,14 +48,14 @@ public class ScalesBeanIn extends AbstractBean {
 		setScalesList(scalesDataService.getScalesInByPeriod(getStartDate(), getEndDate()));
 	}
 	
-	public ScalesData getNewScale(){
-		ScalesData sd = new ScalesData();
+	public Scales getNewScale(){
+		Scales sd = new Scales();
 		Integer sezon = scalesDataService.getDefSezon(getStartDate(), cUser.getDiv().getId());
 		sd.setSezon(sezon);
 		return sd;
 	}
 
-	public String bgcolor(ScalesData sd){
+	public String bgcolor(Scales sd){
 		double mNetto = sd.getMasaNeto();
 		double mTtn = sd.getTtnMasa() == null ? 0 : sd.getTtnMasa();
 		
@@ -108,23 +108,23 @@ public class ScalesBeanIn extends AbstractBean {
         return scalesDataService.getTipulList(10, query);
     }
 	
-	public void setScalesDataService(ScalesDataService scalesDataService) {
+	public void setScalesDataService(ScaleService scalesDataService) {
 		this.scalesDataService = scalesDataService;
 	}
 
-	public List<ScalesData> getScalesList() {
+	public List<Scales> getScalesList() {
 		return scalesList;
 	}
 
-	public void setScalesList(List<ScalesData> scalesList) {
+	public void setScalesList(List<Scales> scalesList) {
 		this.scalesList = scalesList;
 	}
 
-	public ScalesData getSelectedScale() {
-		return selectedScale == null ? new ScalesData() : selectedScale;
+	public Scales getSelectedScale() {
+		return selectedScale == null ? new Scales() : selectedScale;
 	}
 
-	public void setSelectedScale(ScalesData selectedScale) {
+	public void setSelectedScale(Scales selectedScale) {
 		this.selectedScale = selectedScale;
 	}
 

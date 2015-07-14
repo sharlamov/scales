@@ -1,6 +1,5 @@
 package net.scales.bean;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,8 +11,8 @@ import javax.faces.context.FacesContext;
 
 import net.scales.model.CustomItem;
 import net.scales.model.CustomUser;
-import net.scales.model.ScalesData;
-import net.scales.service.ScalesDataService;
+import net.scales.model.Scales;
+import net.scales.service.ScaleService;
 
 @ManagedBean(name = "scalesBeanOut")
 @ViewScoped
@@ -21,16 +20,14 @@ public class ScalesBeanOut extends AbstractBean {
 
 	private static final long serialVersionUID = 1L;
 
-	@ManagedProperty(value = "#{scalesDataServiceImpl}")
-	private ScalesDataService scalesDataService;
+	@ManagedProperty(value = "#{scaleServiceImpl}")
+	private ScaleService scaleService;
 
-	private List<ScalesData> scalesList;
+	private List<Scales> scalesList;
 
-	private ScalesData selectedScale;
+	private Scales selectedScale;
 
 	private CustomItem selectedItem;
-	
-	private List<CustomItem> dropList = new ArrayList<CustomItem>();
 	
 	private CustomUser cUser;
 	
@@ -45,12 +42,12 @@ public class ScalesBeanOut extends AbstractBean {
 	}
 
 	public void dateChangeHandler() {
-		setScalesList(scalesDataService.getScalesListByPeriod(getStartDate(), getEndDate()));
+		setScalesList(scaleService.getScalesListByPeriod(getStartDate(), getEndDate()));
 	}
 	
-	public ScalesData getNewScale(){
-		ScalesData sd = new ScalesData();
-		Integer sezon = scalesDataService.getDefSezon(getStartDate(), cUser.getDiv().getId());
+	public Scales getNewScale(){
+		Scales sd = new Scales();
+		Integer sezon = scaleService.getDefSezon(getStartDate(), cUser.getDiv().getId());
 		sd.setSezon(sezon);
 		return sd;
 	}
@@ -61,11 +58,11 @@ public class ScalesBeanOut extends AbstractBean {
 			
 			if(selectedScale.getId() == null){
 				selectedScale.setDateIn(cDate);
-				scalesDataService.insertScale(selectedScale, cUser);
+				scaleService.insertScale(selectedScale, cUser);
 				dateChangeHandler();
 				selectedScale = null;
 			}else{
-				scalesDataService.updateScale(selectedScale, cUser);
+				scaleService.updateScale(selectedScale, cUser);
 			}
 		} catch (Exception e) {
 			FacesContext context = FacesContext.getCurrentInstance();
@@ -77,38 +74,38 @@ public class ScalesBeanOut extends AbstractBean {
 	} 
 
 	public List<CustomItem> completeTransportList(String query) {
-        return scalesDataService.getTransportList(10, query);
+        return scaleService.getTransportList(10, query);
     }
 	
 	public List<CustomItem> completeDestinatarList(String query) {
-        return scalesDataService.getDestinatarList(10, query);
+        return scaleService.getDestinatarList(10, query);
     }
 	
 	public List<CustomItem> completePunctulList(String query) {
-        return scalesDataService.getPunctulList(10, query);
+        return scaleService.getPunctulList(10, query);
     }
 	
 	public List<CustomItem> completeTipulList(String query) {
-        return scalesDataService.getTipulList(10, query);
+        return scaleService.getTipulList(10, query);
     }
 	
-	public void setScalesDataService(ScalesDataService scalesDataService) {
-		this.scalesDataService = scalesDataService;
+	public void setScaleService(ScaleService scaleService) {
+		this.scaleService = scaleService;
 	}
 
-	public List<ScalesData> getScalesList() {
+	public List<Scales> getScalesList() {
 		return scalesList;
 	}
 
-	public void setScalesList(List<ScalesData> scalesList) {
+	public void setScalesList(List<Scales> scalesList) {
 		this.scalesList = scalesList;
 	}
 
-	public ScalesData getSelectedScale() {
-		return selectedScale == null ? new ScalesData() : selectedScale;
+	public Scales getSelectedScale() {
+		return selectedScale == null ? new Scales() : selectedScale;
 	}
 
-	public void setSelectedScale(ScalesData selectedScale) {
+	public void setSelectedScale(Scales selectedScale) {
 		this.selectedScale = selectedScale;
 	}
 
@@ -118,13 +115,5 @@ public class ScalesBeanOut extends AbstractBean {
 
 	public void setSelectedItem(CustomItem selectedItem) {
 		this.selectedItem = selectedItem;
-	}
-
-	public List<CustomItem> getDropList() {
-		return dropList;
-	}
-
-	public void setDropList(List<CustomItem> dropList) {
-		this.dropList = dropList;
 	}
 }

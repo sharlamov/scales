@@ -3,7 +3,7 @@ package net.scales.service;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.scales.dao.ScalesDataDAO;
+import net.scales.dao.ScaleDAO;
 import net.scales.dao.UserDAO;
 import net.scales.enums.UserRoleEnum;
 import net.scales.model.CustomItem;
@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 	private UserDAO userDAO;
     
     @Autowired
-	private ScalesDataDAO scalesDataDAO;
+	private ScaleDAO scalesDataDAO;
     
     
 	public UserDetails loadUserByUsername(String arg0)
@@ -44,6 +44,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
             	Object[] data = (Object[]) userCredentials;
             	userDetails.setId(WebUtil.parse(data[i++], Long.class));
                 userDetails.setUsername(WebUtil.parse(data[i++], String.class));
+                userDetails.setAdminLevel(Integer.parseInt(data[i++].toString()));
                 userDetails.setPassword(WebUtil.parse(data[i++], String.class));
                 userDetails.setCustomerAuthorities(roles);
         	}

@@ -21,3 +21,15 @@ target/classes/net/scales/service/UserService.class
 target/classes/net/scales/service/UserServiceImpl.class
 target/classes/net/scales/util/WebUtil.class
 target/m2e-wtp/web-resources/META-INF/MANIFEST.MF
+target/classes/net/scales/bean/LaborBeanIn.class
+target/classes/net/scales/dao/AbstractDAOImpl.class
+target/classes/net/scales/dao/LaborDAO.class
+target/classes/net/scales/dao/LaborDAOImpl.class
+target/classes/net/scales/dao/ScaleDAO.class
+target/classes/net/scales/dao/ScaleDAOImpl.class
+target/classes/net/scales/model/Labor.class
+target/classes/net/scales/model/Scales.class
+target/classes/net/scales/service/LaborService.class
+target/classes/net/scales/service/LaborServiceImpl.class
+target/classes/net/scales/service/ScaleService.class
+target/classes/net/scales/service/ScaleServiceImpl.class

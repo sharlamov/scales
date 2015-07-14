@@ -3,14 +3,12 @@ package net.scales.dao;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
-import net.scales.model.ScalesData;
+import net.scales.model.Scales;
 
 import org.hibernate.HibernateException;
-import org.primefaces.model.SortOrder;
 
-public interface ScalesDataDAO {
+public interface ScaleDAO {
 
 	public List<Object> getScalesListByPeriod(Date date, Date date2);
 
@@ -20,20 +18,17 @@ public interface ScalesDataDAO {
 
 	public List<Object> getSyssList(String tip, Integer gr1);
 
-	public int updateScale(ScalesData data) throws HibernateException,
+	public int updateScale(Scales data) throws HibernateException,
 			SQLException;
 
-	public int insertScale(ScalesData data) throws HibernateException,
+	public int insertScale(Scales data) throws HibernateException,
 			SQLException;
 
-	public int updateScaleIn(ScalesData data) throws HibernateException,
+	public int updateScaleIn(Scales data) throws HibernateException,
 			SQLException;
 
-	public int insertScaleIn(ScalesData data) throws HibernateException,
+	public int insertScaleIn(Scales data) throws HibernateException,
 			SQLException;
-
-	public List<Object> getDirectory(int listType, int first, int pageSize,
-			String sortField, SortOrder sortOrder, Map<String, Object> filters);
 
 	public List<Object> getTransportList(int i, String query);
 

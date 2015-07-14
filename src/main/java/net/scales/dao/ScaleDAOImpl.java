@@ -3,28 +3,15 @@ package net.scales.dao;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
-import net.scales.model.CustomItem;
-import net.scales.model.ScalesData;
+import net.scales.model.Scales;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.primefaces.model.SortOrder;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ScalesDataDAOImpl implements ScalesDataDAO {
-
-	@Autowired
-	private SessionFactory sessionFactory;
-
-	private Session currentSession() {
-		return sessionFactory.getCurrentSession();
-	}
+public class ScaleDAOImpl extends AbstractDAOImpl implements ScaleDAO {
 
 	@SuppressWarnings("unchecked")
 	public List<Object> getScalesList() {
@@ -79,7 +66,7 @@ public class ScalesDataDAOImpl implements ScalesDataDAO {
 		return list;
 	}
 
-	public int updateScale(ScalesData data) throws HibernateException,
+	public int updateScale(Scales data) throws HibernateException,
 			SQLException {
 		String sql = "UPDATE ytrans_vtf_prohodn_out SET  sofer = :p2,"
 				+ "nr_vagon = :p3, nr_remorca = :p4,"
@@ -117,7 +104,7 @@ public class ScalesDataDAOImpl implements ScalesDataDAO {
 				.executeUpdate();
 	}
 
-	public int insertScale(ScalesData data) throws HibernateException,
+	public int insertScale(Scales data) throws HibernateException,
 			SQLException {
 
 		String sql = "insert into ytrans_vtf_prohodn_out "
@@ -149,7 +136,7 @@ public class ScalesDataDAOImpl implements ScalesDataDAO {
 				.executeUpdate();
 	}
 
-	public int updateScaleIn(ScalesData data) throws HibernateException,
+	public int updateScaleIn(Scales data) throws HibernateException,
 			SQLException {
 		String sql = "UPDATE VTF_PROHODN_MPFS set  sofer = :p2,"
 				+ "auto = :p3, nr_remorca = :p4,"
@@ -186,7 +173,7 @@ public class ScalesDataDAOImpl implements ScalesDataDAO {
 				.executeUpdate();
 	}
 
-	public int insertScaleIn(ScalesData data) throws HibernateException,
+	public int insertScaleIn(Scales data) throws HibernateException,
 			SQLException {
 		String sql = "insert into VTF_PROHODN_MPFS "
 				+ "(id,sofer,auto,nr_remorca,dep_postav, dep_postav_text,ppogruz_s_12  , sc_mp, sezon_yyyy,	ttn_n, ttn_data, masa_ttn, nr_analiz,dep_transp ,dep_transp_text,masa_brutto,masa_tara, masa_netto, time_in, time_out,div,elevator,userid,priznak_arm) "
@@ -215,86 +202,6 @@ public class ScalesDataDAOImpl implements ScalesDataDAO {
 				.setString("p22", parseItem(data.getElevator()))
 				.setString("p23", parseNumber(data.getUserid()))
 				.executeUpdate();
-	}
-
-	private String parseNumber(Number val) {
-		return val != null ? val.toString() : "";
-	}
-
-	private String parseItem(CustomItem val) {
-		return (val != null && val.getId() != null) ? val.getId().toString()
-				: "";
-	}
-
-	private String parseItemText(CustomItem val) {
-		if (val == null) {
-			return "";
-		}
-		if (val.getId() == null && val.getLabel() != null)
-			return val.getLabel();
-		else
-			return "";
-	}
-
-	@SuppressWarnings("unchecked")
-	public List<Object> getDirectory(int listType, int first, int pageSize,
-			String sortField, SortOrder sortOrder, Map<String, Object> filters) {
-
-		String sql = "";
-
-		switch (listType) {
-		case 1:
-			sql += "select cod1 as cod, denumirea from vms_syss s where tip='S' and  cod=14 and cod1<>0";
-			break;
-		case 2:
-			sql += "select cod, denumirea from vms_univers where tip='O' and gr1='E'";
-			break;
-		case 3:
-			sql += "select cod, denumirea from vms_univers where tip='O' and gr1 in('E','COTA')";
-			break;
-		case 4:
-			sql += "select cod1 as cod, denumirea ||', '|| nmb1t ||', '|| nmb2t as denumirea from vms_syss s where tip='S' and cod='12' and cod1>0";
-			break;
-		case 5:
-			sql += "select cod1 as cod, denumirea ||', '|| nmb1t ||', '|| nmb2t as denumirea from vms_syss s where tip='S' and cod='12' and cod1>0";
-			break;
-		case 6:
-			sql += "select cod, denumirea from vms_univers where tip='M' and gr1='P'";
-			break;
-		case 7:
-			sql += "select cod, denumirea from vms_univers where tip='T' and gr1='CAR'";
-			break;
-		case 8:
-			sql += "select cod, denumirea from vms_univers where tip='T' and gr1='CART'";
-			break;
-		default:
-			sql += "select * from dual where 1 != 1";
-		}
-
-		sql += " order by denumirea";
-
-		if (filters.containsKey("filt")) {
-			String flt = (String) filters.get("filt");
-			sql = "select * from ( " + sql
-					+ " ) where lower(cod || denumirea) like '%"
-					+ flt.toLowerCase() + "%'";
-
-		}
-
-		sql = "select * from  (select a.*,rownum nr, count(*) over () rcount from ( "
-				+ sql + " ) a ) where nr between  :fp + 1 and :fp + :ps";
-
-		return currentSession().createSQLQuery(sql).setInteger("fp", first)
-				.setInteger("ps", pageSize).list();
-	}
-
-	@SuppressWarnings("unchecked")
-	private List<Object> getLimitList(int size, String query, String sql) {
-		sql = "select * from (" + sql + ") " + "where lower(denumirea) like '%"
-				+ query.trim().toLowerCase()
-				+ "%' and rownum < :size order by 2";
-		return currentSession().createSQLQuery(sql).setInteger("size", size)
-				.list();
 	}
 
 	public List<Object> getTransportList(int i, String query) {

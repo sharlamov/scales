@@ -3,6 +3,7 @@ package net.scales.dao;
 import java.sql.SQLException;
 
 import net.scales.model.CustomItem;
+import net.scales.model.CustomUser;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -22,7 +23,7 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	public Object loadUserByUsername(String username) {
-		String sql = "select id, username, "
+		String sql = "select id, username,nvl(admin,0) as admin, "
 				+ "nvl(password, (select old_value  from a$act t where action='p' and  t.obj_id=a.obj_id and  stamp=(select max(t1.stamp) from a$act t1 where t1.action='p' and  t.obj_id=t1.obj_id))) as pass "
 				+ "from a$users$v a where enabled=1 and username = :user_name";
 		return currentSession().createSQLQuery(sql)
@@ -59,5 +60,19 @@ public class UserDAOImpl implements UserDAO {
 		String sql = " select nvl(max(value),0) from a$users$v a, A$ADP$v v where a.ID=:userId and v.obj_id=a.obj_id and KEY='CANTARE' ";
 		Query query = currentSession().createSQLQuery(sql).setLong("userId",userId);
 		return Integer.parseInt(query.uniqueResult().toString());
+	}
+	
+	public void initContext(CustomUser user){
+		String sql = " begin "
+				+ "envun4.envsetvalue('PARAM_USERID',:userId); "
+				+ "envun4.envsetvalue('INIPARAM_ADMINLEVEL',:adminLevel); "
+				+ "un$div.set_def(:div); "
+				+ "end; ";
+		Query updateQuery = currentSession().createSQLQuery(sql);
+		updateQuery
+		.setLong("userId", user.getId())
+		.setLong("adminLevel", user.getAdminLevel())
+		.setLong("div", user.getDiv().getId())
+				.executeUpdate();
 	}
 }

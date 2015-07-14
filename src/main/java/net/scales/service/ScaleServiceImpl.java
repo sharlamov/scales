@@ -3,61 +3,59 @@ package net.scales.service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
-import net.scales.dao.ScalesDataDAO;
+import net.scales.dao.ScaleDAO;
 import net.scales.dao.UserDAO;
 import net.scales.model.CustomItem;
 import net.scales.model.CustomUser;
-import net.scales.model.ScalesData;
+import net.scales.model.Scales;
 import net.scales.util.WebUtil;
 
-import org.primefaces.model.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class ScalesDataServiceImpl implements ScalesDataService {
+public class ScaleServiceImpl implements ScaleService {
 
 	@Autowired
-	private ScalesDataDAO scalesDataDAO;
+	private ScaleDAO scalesDataDAO;
 
 	@Autowired
 	private UserDAO userDAO;
 
-	public List<ScalesData> getScalesListByPeriod(Date date1, Date date2) {
+	public List<Scales> getScalesListByPeriod(Date date1, Date date2) {
 		List<Object> list = scalesDataDAO.getScalesListByPeriod(date1, date2);
-		List<ScalesData> newlist = new ArrayList<ScalesData>(list.size());
+		List<Scales> newlist = new ArrayList<Scales>(list.size());
 		for (Object obj : list) {
 			newlist.add(convertToScalesDataOut(obj));
 		}
 		return newlist;
 	}
 
-	public List<ScalesData> getScalesInByPeriod(Date date1, Date date2) {
+	public List<Scales> getScalesInByPeriod(Date date1, Date date2) {
 		List<Object> list = scalesDataDAO.getScalesInByPeriod(date1, date2);
-		List<ScalesData> newlist = new ArrayList<ScalesData>(list.size());
+		List<Scales> newlist = new ArrayList<Scales>(list.size());
 		for (Object obj : list) {
 			newlist.add(convertToScalesDataIn(obj));
 		}
 		return newlist;
 	}
 
-	public void updateScale(ScalesData data, CustomUser user) throws Exception {
+	public void updateScale(Scales data, CustomUser user) throws Exception {
 		if (user.getScaleType() == 0)
 			throw new Exception("The current user doesn't have rights");
 
-		userDAO.initUserParams(user.getUsername(), user.getPassword());
+		userDAO.initContext(user);
 		scalesDataDAO.updateScale(data);
 	}
 
-	public void insertScale(ScalesData data, CustomUser user) throws Exception {
+	public void insertScale(Scales data, CustomUser user) throws Exception {
 		if (user.getScaleType() == 0)
 			throw new Exception("The current user doesn't have rights");
 
-		userDAO.initUserParams(user.getUsername(), user.getPassword());
+		userDAO.initContext(user);
 
 		if (user.getScaleType() == 5) {
 			data.setDiv(user.getDiv().getId());
@@ -68,19 +66,19 @@ public class ScalesDataServiceImpl implements ScalesDataService {
 			throw new Exception("The current user doesn't have rights");
 	}
 
-	public void updateScaleIn(ScalesData data, CustomUser user) throws Exception {
+	public void updateScaleIn(Scales data, CustomUser user) throws Exception {
 		if (user.getScaleType() == 0)
 			throw new Exception("The current user doesn't have rights");
 
-		userDAO.initUserParams(user.getUsername(), user.getPassword());
+		userDAO.initContext(user);
 		scalesDataDAO.updateScaleIn(data);
 	}
 
-	public void insertScaleIn(ScalesData data, CustomUser user) throws Exception {
+	public void insertScaleIn(Scales data, CustomUser user) throws Exception {
 		if (user.getScaleType() == 0)
 			throw new Exception("The current user doesn't have rights");
 
-		userDAO.initUserParams(user.getUsername(), user.getPassword());
+		userDAO.initContext(user);
 
 		if (user.getScaleType() == 5) {
 			data.setDiv(user.getDiv().getId());
@@ -91,12 +89,6 @@ public class ScalesDataServiceImpl implements ScalesDataService {
 			throw new Exception("The current user doesn't have rights");
 	}
 
-	public List<Object> getDirectory(int listType, int first, int pageSize,
-			String sortField, SortOrder sortOrder, Map<String, Object> filters) {
-		return scalesDataDAO.getDirectory(listType, first, pageSize, sortField,
-				sortOrder, filters);
-	}
-
 	public List<Object> getPuctSosireList() {
 		return scalesDataDAO.getSyssList("S", 12);
 	}
@@ -105,9 +97,9 @@ public class ScalesDataServiceImpl implements ScalesDataService {
 		return scalesDataDAO.getUniversList("M", "P");
 	}
 
-	private ScalesData convertToScalesDataOut(Object obj) {
+	private Scales convertToScalesDataOut(Object obj) {
 		int i = 0;
-		ScalesData scalesData = new ScalesData();
+		Scales scalesData = new Scales();
 		
 		Object[] data = (Object[]) obj;
 		scalesData.setId(WebUtil.parse(data[i++], Long.class));
@@ -135,9 +127,9 @@ public class ScalesDataServiceImpl implements ScalesDataService {
 		return scalesData;
 	}
 	
-	private ScalesData convertToScalesDataIn(Object obj) {
+	private Scales convertToScalesDataIn(Object obj) {
 		int i = 0;
-		ScalesData scalesData = new ScalesData();
+		Scales scalesData = new Scales();
 		
 		Object[] data = (Object[]) obj;
 		scalesData.setId(WebUtil.parse(data[i++], Long.class));

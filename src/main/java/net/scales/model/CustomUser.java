@@ -16,6 +16,7 @@ public class CustomUser implements UserDetails {
 	private CustomItem elevator;
 	private CustomItem div;
 	private Integer scaleType;
+	private Integer adminLevel;
 	private Set<GrantedAuthority> authorities;
 
 	public void setUsername(String str) {
@@ -91,5 +92,13 @@ public class CustomUser implements UserDetails {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Integer getAdminLevel() {
+		return adminLevel;
+	}
+
+	public void setAdminLevel(Integer adminLevel) {
+		this.adminLevel = adminLevel;
 	}
 }

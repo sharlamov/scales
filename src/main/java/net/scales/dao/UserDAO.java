@@ -3,6 +3,7 @@ package net.scales.dao;
 import java.sql.SQLException;
 
 import net.scales.model.CustomItem;
+import net.scales.model.CustomUser;
 
 import org.hibernate.HibernateException;
 
@@ -17,4 +18,6 @@ public interface UserDAO {
 	public CustomItem getUserElevator(long userId);
 	
 	public int getUserScaleType(long userId);
+	
+	public void initContext(CustomUser user);
 }
