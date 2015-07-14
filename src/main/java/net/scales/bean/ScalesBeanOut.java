@@ -10,7 +10,6 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import net.scales.model.CustomItem;
-import net.scales.model.CustomUser;
 import net.scales.model.Scales;
 import net.scales.service.ScaleService;
 
@@ -29,16 +28,13 @@ public class ScalesBeanOut extends AbstractBean {
 
 	private CustomItem selectedItem;
 	
-	private CustomUser cUser;
-	
 	@Override
 	public void init() {
-		if (!FacesContext.getCurrentInstance().isPostback()) {
-			cUser = getLoggedUser();
+//		if (!FacesContext.getCurrentInstance().isPostback()) {
 			setStartDate(nvl(getStartDate()));
 			setEndDate(nvl(getEndDate()));
 			dateChangeHandler();
-		}
+//		}
 	}
 
 	public void dateChangeHandler() {
@@ -47,7 +43,7 @@ public class ScalesBeanOut extends AbstractBean {
 	
 	public Scales getNewScale(){
 		Scales sd = new Scales();
-		Integer sezon = scaleService.getDefSezon(getStartDate(), cUser.getDiv().getId());
+		Integer sezon = scaleService.getDefSezon(getStartDate(), getLoggedUser().getDiv().getId());
 		sd.setSezon(sezon);
 		return sd;
 	}
@@ -58,11 +54,11 @@ public class ScalesBeanOut extends AbstractBean {
 			
 			if(selectedScale.getId() == null){
 				selectedScale.setDateIn(cDate);
-				scaleService.insertScale(selectedScale, cUser);
+				scaleService.insertScale(selectedScale, getLoggedUser());
 				dateChangeHandler();
 				selectedScale = null;
 			}else{
-				scaleService.updateScale(selectedScale, cUser);
+				scaleService.updateScale(selectedScale, getLoggedUser());
 			}
 		} catch (Exception e) {
 			FacesContext context = FacesContext.getCurrentInstance();

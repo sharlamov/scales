@@ -10,7 +10,6 @@ import javax.faces.context.FacesContext;
 import net.scales.model.CustomItem;
 import net.scales.model.CustomUser;
 import net.scales.model.Labor;
-import net.scales.model.Scales;
 import net.scales.service.LaborService;
 
 @ManagedBean(name = "laborBeanIn")
@@ -41,9 +40,8 @@ public class LaborBeanIn extends AbstractBean {
 		laborList = laborService.getLaborsByPeriod(getStartDate(), cUser);
 	}
 	
-	public Scales getNewScale(){
-		Scales sd = new Scales();
-		return sd;
+	public Labor getNewLabor(){
+		return new Labor();
 	}
 
 	public List<CustomItem> completeTipulList(String query) {

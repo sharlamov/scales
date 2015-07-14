@@ -1,39 +1,21 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition template="templates/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:tp="http://java.sun.com/jsf/composite/components"
 	xmlns:pe="http://primefaces.org/ui/extensions">
-<h:head>
-	<title>Transoil Group</title>
-	<h:outputScript library="js" name="common.js" />
-	<h:outputStylesheet library="css" name="common.css" />
-</h:head>
-<h:body>
-	<f:event type="preRenderView" listener="#{scalesBeanIn.init}" />
 
-	<h:form id="form" autocomplete="off">
-		<p:growl id="msgs" showDetail="true" />
+	<ui:define name="info">
+		<tp:detailPanel customBean="#{scalesBeanIn}" />
+	</ui:define>
 
-		<div
-			style="border: 1px solid #cccccc; background: #424548; margin-bottom: 10px; border-radius: 5px; color: #F9F7F7;">
-			<span style="font-size: 25px; font-weight: bold; margin-left: 10px;">Bascula</span>
-		</div>
+	<ui:define name="content">
+		<f:event type="preRenderView" listener="#{scalesBeanIn.initController}" />
 
-		<div
-			style="border: 1px solid #cccccc; background: #F2F1F1 repeat-x scroll 0 0; margin-bottom: 10px; border-radius: 5px;">
-			<table border="0" width="100%">
-				<tr>
-					<td width="40%"><tp:detailPanel customBean="#{scalesBeanIn}" /></td>
-					<td style="margin: 20px; float: right;"><ui:include
-							src="templates/menu.xhtml" /></td>
-				</tr>
-			</table>
-		</div>
-
+	<h:form id="contentForm" autocomplete="off">
+	
 		<p:panel id="data" header="Cantar Intrari Auto"
 			style="margin-bottom:10px;">
 			<p:dataTable var="scale" value="#{scalesBeanIn.scalesList}" rows="10"
@@ -208,11 +190,11 @@
 			<p:commandButton value="Salvare"
 				oncomplete="if (!args.validationFailed) PF('editDialog').hide()"
 				actionListener="#{scalesBeanIn.saveScale}"
-				update=":form:table :form:msgs" process=":formDlg1:editDialog" />
+				update=":contentForm:table :msgs" process=":formDlg1:editDialog" />
 			<p:commandButton value="Anulare" onclick="PF('editDialog').hide()"
 				immediate="true" global="false" process=":formDlg1:editDialog">
 			</p:commandButton>
 		</p:dialog>
 	</h:form>
-</h:body>
-</html>
+	</ui:define>
+</ui:composition>

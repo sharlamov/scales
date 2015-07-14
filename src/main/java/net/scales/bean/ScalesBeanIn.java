@@ -10,7 +10,6 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import net.scales.model.CustomItem;
-import net.scales.model.CustomUser;
 import net.scales.model.Scales;
 import net.scales.service.ScaleService;
 
@@ -20,96 +19,94 @@ public class ScalesBeanIn extends AbstractBean {
 
 	private static final long serialVersionUID = 1L;
 
-	@ManagedProperty(value = "#{scalesDataServiceImpl}")
-	private ScaleService scalesDataService;
+	@ManagedProperty(value = "#{scaleServiceImpl}")
+	private ScaleService scaleService;
 
 	private List<Scales> scalesList;
 
 	private Scales selectedScale;
 
 	private CustomItem selectedItem;
-	
-	private CustomUser cUser;
-	
+
 	private int limit;
-	
+
 	@Override
 	public void init() {
-		if (!FacesContext.getCurrentInstance().isPostback()) {
-			cUser = getLoggedUser();
-			setStartDate(nvl(getStartDate()));
-			setEndDate(nvl(getEndDate()));
-			limit = scalesDataService.getLimit();
-			dateChangeHandler();
-		}
+		setStartDate(nvl(getStartDate()));
+		setEndDate(nvl(getEndDate()));
+		limit = scaleService.getLimit();
+		dateChangeHandler();
 	}
 
 	public void dateChangeHandler() {
-		setScalesList(scalesDataService.getScalesInByPeriod(getStartDate(), getEndDate()));
+		setScalesList(scaleService.getScalesInByPeriod(getStartDate(),
+				getEndDate()));
 	}
-	
-	public Scales getNewScale(){
+
+	public Scales getNewScale() {
 		Scales sd = new Scales();
-		Integer sezon = scalesDataService.getDefSezon(getStartDate(), cUser.getDiv().getId());
+		Integer sezon = scaleService.getDefSezon(getStartDate(),
+				getLoggedUser().getDiv().getId());
 		sd.setSezon(sezon);
 		return sd;
 	}
 
-	public String bgcolor(Scales sd){
+	public String bgcolor(Scales sd) {
 		double mNetto = sd.getMasaNeto();
 		double mTtn = sd.getTtnMasa() == null ? 0 : sd.getTtnMasa();
-		
-		if(mNetto - mTtn < limit)
+
+		if (mNetto - mTtn < limit)
 			return "rowstrongred";
-		if(mNetto - mTtn < 0)
+		if (mNetto - mTtn < 0)
 			return "rowred";
-		if(mNetto == mTtn)
+		if (mNetto == mTtn)
 			return "rowgreen";
-		if(mNetto > mTtn)
+		if (mNetto > mTtn)
 			return "rowstronggreen";
-		
+
 		return "";
 	}
-	
-	public void saveScale(){
+
+	public void saveScale() {
 		try {
 			Date cDate = nvl(getStartDate());
-			
-			if(selectedScale.getId() == null){
+
+			if (selectedScale.getId() == null) {
 				selectedScale.setDateIn(cDate);
-				scalesDataService.insertScaleIn(selectedScale, cUser);
+				scaleService.insertScaleIn(selectedScale, getLoggedUser());
 				dateChangeHandler();
 				selectedScale = null;
-			}else{
-				scalesDataService.updateScaleIn(selectedScale, cUser);
+			} else {
+				scaleService.updateScaleIn(selectedScale, getLoggedUser());
 			}
 		} catch (Exception e) {
 			FacesContext context = FacesContext.getCurrentInstance();
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Save error", e.getMessage());
+			FacesMessage message = new FacesMessage(
+					FacesMessage.SEVERITY_ERROR, "Save error", e.getMessage());
 			context.addMessage(null, message);
 			context.validationFailed();
 			e.printStackTrace();
 		}
-	} 
+	}
 
 	public List<CustomItem> completeTransportList(String query) {
-        return scalesDataService.getTransportList(10, query);
-    }
-	
+		return scaleService.getTransportList(10, query);
+	}
+
 	public List<CustomItem> completeDestinatarList(String query) {
-        return scalesDataService.getDestinatarList(10, query);
-    }
-	
+		return scaleService.getDestinatarList(10, query);
+	}
+
 	public List<CustomItem> completePunctulList(String query) {
-        return scalesDataService.getPunctulList(10, query);
-    }
-	
+		return scaleService.getPunctulList(10, query);
+	}
+
 	public List<CustomItem> completeTipulList(String query) {
-        return scalesDataService.getTipulList(10, query);
-    }
-	
-	public void setScalesDataService(ScaleService scalesDataService) {
-		this.scalesDataService = scalesDataService;
+		return scaleService.getTipulList(10, query);
+	}
+
+	public void setScaleService(ScaleService scaleService) {
+		this.scaleService = scaleService;
 	}
 
 	public List<Scales> getScalesList() {
