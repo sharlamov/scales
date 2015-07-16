@@ -2,7 +2,7 @@ package net.scales.model;
 
 import java.util.Date;
 
-public class Labor {
+public class Labor implements Cloneable{
 
 	private Long sezon;
 	private Long nrAnaliz;
@@ -36,6 +36,7 @@ public class Labor {
 	private Long elevator;
 	private String postav;
 	private String otpravit;
+	private CustomItem dep;
 
 	public Long getSezon() {
 		return sezon;
@@ -230,4 +231,14 @@ public class Labor {
 		this.otpravit = otpravit;
 	}
 
+	@Override
+	public Object clone()throws CloneNotSupportedException{  
+		return super.clone();  
+	}
+	public CustomItem getDep() {
+		return dep;
+	}
+	public void setDep(CustomItem dep) {
+		this.dep = dep;
+	}
 }

@@ -35,14 +35,6 @@
 						</h:outputText>
 					</p:column>
 
-					<p:column headerText="Sezon">
-						<h:outputText value="#{labor.sezon}" />
-					</p:column>
-
-					<p:column headerText="Cereale">
-						<h:outputText value="#{labor.sc.label}" />
-					</p:column>
-
 					<p:column headerText="Umiditate (%)">
 						<h:outputText value="#{labor.anlzVlajn}" />
 					</p:column>
@@ -63,44 +55,36 @@
 						<h:outputText value="#{labor.anlzNatura}" />
 					</p:column>
 
-					<p:column headerText="IDC% ">
-						<h:outputText value="#{labor.anlzMaslprim}" />
-					</p:column>
-
 					<p:column headerText="Gluten">
 						<h:outputText value="#{labor.anlzKleik}" />
-					</p:column>
-
-					<p:column headerText="Germinatie  (%)">
-						<h:outputText value="#{labor.sanlzSorn}" />
 					</p:column>
 
 					<p:column headerText="Aciditate">
 						<h:outputText value="#{labor.anlzKislot}" />
 					</p:column>
 
-					<p:column headerText="Clasacereale">
-						<h:outputText value="#{labor.partida}" />
+					<p:column headerText="Germinatie  (%)">
+						<h:outputText value="#{labor.sanlzSorn}" />
 					</p:column>
 
-					<p:column headerText="% de cereale (cob/stiulete)">
+					<p:column headerText="IDC% ">
+						<h:outputText value="#{labor.anlzMaslprim}" />
+					</p:column>
+
+					<p:column headerText="Boabe defecte sparte">
 						<h:outputText value="#{labor.anlzVihod}" />
 					</p:column>
 
-					<p:column headerText="Boabe defecte  sparte">
-						<h:outputText value="#{labor.anlzBitoeZerno}" />
+					<p:column headerText="Sezon">
+						<h:outputText value="#{labor.sezon}" />
 					</p:column>
 
 					<p:column headerText="№ certificat">
 						<h:outputText value="#{labor.nrSert}" />
 					</p:column>
 
-					<p:column headerText="Furnizor">
-						<h:outputText value="#{labor.postav}" />
-					</p:column>
-
-					<p:column headerText="Transportator">
-						<h:outputText value="#{labor.otpravit}" />
+					<p:column headerText="Depozit">
+						<h:outputText value="#{labor.dep.label}" />
 					</p:column>
 
 					<p:column headerText="Comentariu">
@@ -143,19 +127,6 @@
 							<f:convertDateTime pattern="dd.MM.yyyy" />
 						</p:calendar>
 
-						<h:outputText value="Sezon" />
-						<p:inputText value="#{laborBeanIn.selectedLabor.sezon}"
-							required="true" requiredMessage="Completati sezon">
-							<pe:keyFilter regEx="/[\d\-]/" />
-						</p:inputText>
-
-						<h:outputText value="Cereale" />
-						<p:autoComplete value="#{laborBeanIn.selectedLabor.sc}"
-							completeMethod="#{laborBeanIn.completeTipulList}" var="item"
-							forceSelection="true" itemLabel="#{item.label}"
-							itemValue="#{item}" converter="customItemConverter">
-						</p:autoComplete>
-
 						<h:outputText value="Umiditate  (%)" />
 						<p:inputText value="#{laborBeanIn.selectedLabor.anlzVlajn}">
 							<pe:keyFilter regEx="/[\d\-\.]/" />
@@ -181,18 +152,8 @@
 							<pe:keyFilter regEx="/[\d\-\.]/" />
 						</p:inputText>
 
-						<h:outputText value="IDC %" />
-						<p:inputText value="#{laborBeanIn.selectedLabor.anlzMaslprim}">
-							<pe:keyFilter regEx="/[\d\-\.]/" />
-						</p:inputText>
-
 						<h:outputText value="Gluten" />
 						<p:inputText value="#{laborBeanIn.selectedLabor.anlzKleik}">
-							<pe:keyFilter regEx="/[\d\-\.]/" />
-						</p:inputText>
-
-						<h:outputText value="Germinatie  (%)" />
-						<p:inputText value="#{laborBeanIn.selectedLabor.sanlzSorn}">
 							<pe:keyFilter regEx="/[\d\-\.]/" />
 						</p:inputText>
 
@@ -201,23 +162,36 @@
 							<pe:keyFilter regEx="/[\d\-\.]/" />
 						</p:inputText>
 
-						<h:outputText value="Clasa cereale" />
-						<p:inputText value="#{laborBeanIn.selectedLabor.partida}">
-							<pe:keyFilter regEx="/[\d\-]/" />
+						<h:outputText value="Germinatie  (%)" />
+						<p:inputText value="#{laborBeanIn.selectedLabor.sanlzSorn}">
+							<pe:keyFilter regEx="/[\d\-\.]/" />
 						</p:inputText>
 
-						<h:outputText value="% de cereale (cob/stiulete)" />
-						<p:inputText value="#{laborBeanIn.selectedLabor.anlzVihod}">
+						<h:outputText value="IDC %" />
+						<p:inputText value="#{laborBeanIn.selectedLabor.anlzMaslprim}">
 							<pe:keyFilter regEx="/[\d\-\.]/" />
 						</p:inputText>
 
 						<h:outputText value="Boabe defecte sparte" />
-						<p:inputText value="#{laborBeanIn.selectedLabor.anlzBitoeZerno}">
+						<p:inputText value="#{laborBeanIn.selectedLabor.anlzVihod}">
 							<pe:keyFilter regEx="/[\d\-\.]/" />
+						</p:inputText>
+
+						<h:outputText value="Sezon" />
+						<p:inputText value="#{laborBeanIn.selectedLabor.sezon}"
+							required="true" requiredMessage="Completati sezon">
+							<pe:keyFilter regEx="/[\d\-]/" />
 						</p:inputText>
 
 						<h:outputText value="№ certificat" />
 						<p:inputText value="#{laborBeanIn.selectedLabor.nrSert}" />
+
+						<h:outputText value="Depozit" />
+						<p:autoComplete value="#{laborBeanIn.selectedLabor.dep}"
+							completeMethod="#{laborBeanIn.completeDepList}" var="item"
+							forceSelection="true" itemLabel="#{item.label}"
+							itemValue="#{item}" converter="customItemConverter">
+						</p:autoComplete>
 
 						<h:outputText value="Comentariu" />
 						<p:inputText value="#{laborBeanIn.selectedLabor.comment}" />

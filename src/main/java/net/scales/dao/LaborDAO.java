@@ -11,10 +11,16 @@ import org.hibernate.HibernateException;
 public interface LaborDAO {
 
 	public List<Object> getLaborsByPeriod(Date date);
+	
+	public List<Object> getLaborsOutByDate(Date date);
 
-	public int updateLabor(Labor data) throws HibernateException, SQLException;
+	public void updateLabor(Labor data, Labor oldData) throws HibernateException, SQLException;
 
-	public int insertScale(Labor data) throws HibernateException, SQLException;
+	public void insertLabor(Labor data) throws HibernateException, SQLException;
 
+	public void insertLaborOut(Labor data) throws HibernateException, SQLException; 
+	
 	public List<Object> getTipulList(int i, String query);
+
+	public List<Object> getDepList(int i, String query);
 }
