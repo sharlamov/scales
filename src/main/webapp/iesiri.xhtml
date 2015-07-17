@@ -7,89 +7,88 @@
 	xmlns:tp="http://java.sun.com/jsf/composite/components"
 	xmlns:pe="http://primefaces.org/ui/extensions">
 
+	<ui:param name="contentName" value="Cantar Iesiri Auto" />
+
 	<ui:define name="info">
 		<tp:detailPanel customBean="#{scalesBeanOut}" />
 	</ui:define>
 
 	<ui:define name="content">
 		<h:form id="contentForm" autocomplete="off">
-			<f:event type="preRenderView" listener="#{scalesBeanOut.initController}" update=":contentForm:panel" />
-			<p:panel id="data" header="Cantar Iesiri Auto"
-				style="margin-bottom:10px;">
+			<f:event type="preRenderView"
+				listener="#{scalesBeanOut.initController}" />
+			<p:dataTable var="scale" value="#{scalesBeanOut.scalesList}"
+				rows="10" id="table" editable="true" paginator="true"
+				currentPageReportTemplate="{currentPage} din {totalPages}"
+				emptyMessage="Nu exista date"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				selection="#{scalesBeanOut.selectedScale}" rowKey="#{scale.id}">
 
-				<p:dataTable var="scale" value="#{scalesBeanOut.scalesList}"
-					rows="10" id="table" editable="true" paginator="true"
-					currentPageReportTemplate="{currentPage} din {totalPages}"
-					emptyMessage="Nu exista date"
-					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-					selection="#{scalesBeanOut.selectedScale}" rowKey="#{scale.id}">
+				<p:column headerText="Conducator auto" style="width:5%;">
+					<h:outputText value="#{scale.conducator}" />
+				</p:column>
 
-					<p:column headerText="Conducator auto" style="width:5%;">
-						<h:outputText value="#{scale.conducator}" />
-					</p:column>
-
-					<p:column headerText="Auto" style="width:5%;">
-						<h:outputText value="#{scale.auto}" />
-					</p:column>
-					<p:column headerText="Remorca" style="width:5%;">
-						<h:outputText value="#{scale.remorca}" />
-					</p:column>
-					<p:column headerText="Transportator">
-						<h:outputText value="#{scale.transportator.label}" />
-					</p:column>
-					<p:column headerText="Destinatar">
-						<h:outputText value="#{scale.destinatar.label}" />
-					</p:column>
-					<p:column headerText="Punctul de sosire">
-						<h:outputText value="#{scale.punctulSosire.label}" />
-					</p:column>
-					<p:column headerText="Statia de destinatie">
-						<h:outputText value="#{scale.statiaDestinatie.label}" />
-					</p:column>
-					<p:column headerText="Tipul de cereale" style="width:5%;">
-						<h:outputText value="#{scale.tipulCereale.label}" />
-					</p:column>
-					<p:column headerText="Aviz seria/№" style="width:5%;">
-						<h:outputText value="#{scale.ttnNumber}" />
-					</p:column>
-					<p:column headerText="Aviz data" style="width:4%;">
-						<h:outputText value="#{scale.ttnData}">
-							<f:convertDateTime pattern="dd.MM.yyyy" />
-						</h:outputText>
-					</p:column>
-					<p:column headerText="Nr. Analize" style="width:3%;">
-						<h:outputText value="#{scale.nrAnaliz}" />
-					</p:column>
-					<p:column headerText="Bruto" style="width:5%;">
-						<h:outputText value="#{scale.masaBruto}" />
-					</p:column>
-					<p:column headerText="Тara" style="width:5%;">
-						<h:outputText value="#{scale.masaTara}" />
-					</p:column>
-					<p:column headerText="Netto" style="width:5%;">
-						<h:outputText value="#{scale.masaNeto}" />
-					</p:column>
-					<p:column headerText="Actions" style="text-align: center;width:3%;">
-						<p:commandButton icon="ui-icon-pencil" title="Editare"
-							oncomplete="setDialogName('Editare'); PF('editDialog').show();"
-							immediate="true" update=":formDlg1:editDialog" process="@this"
-							global="false">
-							<f:setPropertyActionListener value="#{scale}"
+				<p:column headerText="Auto" style="width:5%;">
+					<h:outputText value="#{scale.auto}" />
+				</p:column>
+				<p:column headerText="Remorca" style="width:5%;">
+					<h:outputText value="#{scale.remorca}" />
+				</p:column>
+				<p:column headerText="Transportator">
+					<h:outputText value="#{scale.transportator.label}" />
+				</p:column>
+				<p:column headerText="Destinatar">
+					<h:outputText value="#{scale.destinatar.label}" />
+				</p:column>
+				<p:column headerText="Punctul de sosire">
+					<h:outputText value="#{scale.punctulSosire.label}" />
+				</p:column>
+				<p:column headerText="Statia de destinatie">
+					<h:outputText value="#{scale.statiaDestinatie.label}" />
+				</p:column>
+				<p:column headerText="Tipul de cereale" style="width:5%;">
+					<h:outputText value="#{scale.tipulCereale.label}" />
+				</p:column>
+				<p:column headerText="Aviz seria/№" style="width:5%;">
+					<h:outputText value="#{scale.ttnNumber}" />
+				</p:column>
+				<p:column headerText="Aviz data" style="width:4%;">
+					<h:outputText value="#{scale.ttnData}">
+						<f:convertDateTime pattern="dd.MM.yyyy" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Nr. Analize" style="width:3%;">
+					<h:outputText value="#{scale.nrAnaliz}" />
+				</p:column>
+				<p:column headerText="Bruto" style="width:5%;">
+					<h:outputText value="#{scale.masaBruto}" />
+				</p:column>
+				<p:column headerText="Тara" style="width:5%;">
+					<h:outputText value="#{scale.masaTara}" />
+				</p:column>
+				<p:column headerText="Netto" style="width:5%;">
+					<h:outputText value="#{scale.masaNeto}" />
+				</p:column>
+				<p:column headerText="Actions" style="text-align: center;width:3%;">
+					<p:commandButton icon="ui-icon-pencil" title="Editare"
+						oncomplete="setDialogName('Editare'); PF('editDialog').show();"
+						immediate="true" update=":formDlg1:editDialog" process="@this"
+						global="false">
+						<f:setPropertyActionListener value="#{scale}"
+							target="#{scalesBeanOut.selectedScale}" />
+					</p:commandButton>
+					<f:facet name="footer">
+						<p:commandButton id="addButton" icon="ui-icon-plus"
+							styleClass="regCommandButton"
+							oncomplete="setDialogName('Adauga'); PF('editDialog').show();"
+							update=":formDlg1:editDialog" process="@this" global="false">
+							<f:setPropertyActionListener value="#{scalesBeanOut.newScale}"
 								target="#{scalesBeanOut.selectedScale}" />
 						</p:commandButton>
-						<f:facet name="footer">
-							<p:commandButton id="addButton" icon="ui-icon-plus"
-								styleClass="regCommandButton"
-								oncomplete="setDialogName('Adauga'); PF('editDialog').show();"
-								update=":formDlg1:editDialog" process="@this" global="false">
-								<f:setPropertyActionListener value="#{scalesBeanOut.newScale}"
-									target="#{scalesBeanOut.selectedScale}" />
-							</p:commandButton>
-						</f:facet>
-					</p:column>
+					</f:facet>
+				</p:column>
 
-				</p:dataTable>
-			</p:panel>
+			</p:dataTable>
 		</h:form>
 		<h:form id="formDlg1">
 			<p:dialog header="Edit" id="editDialog" widgetVar="editDialog"

@@ -33,3 +33,4 @@ target/classes/net/scales/service/LaborService.class
 target/classes/net/scales/service/LaborServiceImpl.class
 target/classes/net/scales/service/ScaleService.class
 target/classes/net/scales/service/ScaleServiceImpl.class
+target/classes/net/scales/enums/WebRole.class

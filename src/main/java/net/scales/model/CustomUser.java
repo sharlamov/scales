@@ -3,6 +3,8 @@ package net.scales.model;
 import java.util.Collection;
 import java.util.Set;
 
+import net.scales.enums.WebRole;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -17,6 +19,7 @@ public class CustomUser implements UserDetails {
 	private CustomItem div;
 	private Integer scaleType;
 	private Integer adminLevel;
+	private WebRole level;
 	private Set<GrantedAuthority> authorities;
 
 	public void setUsername(String str) {
@@ -101,4 +104,13 @@ public class CustomUser implements UserDetails {
 	public void setAdminLevel(Integer adminLevel) {
 		this.adminLevel = adminLevel;
 	}
+
+	public WebRole getLevel() {
+		return level;
+	}
+
+	public void setLevel(WebRole level) {
+		this.level = level;
+	}
+
 }

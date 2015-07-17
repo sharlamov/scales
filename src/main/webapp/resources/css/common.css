@@ -2,18 +2,18 @@
 	background-image: url(resources/images/logout-icon.png)
 }
 
-.specfont{
+.specfont {
 	font-family: "Times New Roman", Times, serif;
 	font-size: 12px;
 }
 
 .ui-widget-content {
-  font-family: "Times New Roman", Times, serif;
-  color: #222;
-  font-size: 12px;
+	font-family: "Times New Roman", Times, serif;
+	color: #222;
+	font-size: 12px;
 }
 
-#ui-datepicker-div{
+#ui-datepicker-div {
 	font-family: "Times New Roman", Times, serif !important;
 	font-size: 13px !important;
 }
@@ -49,36 +49,45 @@
 	background-color: #55FF55 !important;
 }
 /*********************************/
-.pair{
+.pair {
 	font-family: "Times New Roman", Times, serif;
 	font-size: 15px;
 	margin-left: 5px;
 	font-weight: bold;
 }
-.inputlabel{
+
+.inputlabel {
 	display: inline-block;
 	width: 150px;
 	margin: 5px;
 }
-.inputvalue{
+
+.inputvalue {
 	display: inline-block;
 	margin: 5px;
 }
 /*********************************/
-.period input{
-	width:80px;
+.period input {
+	width: 80px;
 }
 /*********************************/
-.contentPanel{
-	border: 1px solid #cccccc; 
-	background: #F2F1F1 repeat-x scroll 0 0; 
-	margin-bottom: 10px; 
-	border-radius: 5px;
+.contentPanel {
+	border: 1px solid #cccccc;
+	background: #F2F1F1 repeat-x scroll 0 0;
+	margin-bottom: 10px;
+	border-radius: 4px;
 }
-.titlePanel{
-	border: 1px solid #cccccc; 
-	background: #ABABAB; 
-	margin-bottom: 10px; 
-	border-radius: 5px; 
+
+.titlePanel {
+	border: 1px solid #cccccc;
+	background: dimgrey;
+	margin-bottom: 10px;
+	border-radius: 4px;
 	color: #F9F7F7;
 }
+
+.ui-widget {
+	font-family: "Times New Roman", Times, serif !important;
+	font-size: 13px !important;
+}
+

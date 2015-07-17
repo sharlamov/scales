@@ -3,9 +3,8 @@ package net.scales.service;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.scales.dao.ScaleDAO;
 import net.scales.dao.UserDAO;
-import net.scales.enums.UserRoleEnum;
+import net.scales.enums.WebRole;
 import net.scales.model.CustomItem;
 import net.scales.model.CustomUser;
 import net.scales.util.WebUtil;
@@ -26,16 +25,12 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Autowired
 	private UserDAO userDAO;
     
-    @Autowired
-	private ScaleDAO scalesDataDAO;
-    
-    
 	public UserDetails loadUserByUsername(String arg0)
 			throws UsernameNotFoundException {
-		Set<GrantedAuthority> roles = new HashSet<GrantedAuthority>();
-        roles.add(new SimpleGrantedAuthority(UserRoleEnum.ROLE_USER.name()));
         
         CustomUser userDetails = new CustomUser();
+        Set<GrantedAuthority> roles = new HashSet<GrantedAuthority>();
+        roles.add(new SimpleGrantedAuthority("ROLE_USER"));	 
         
         if(!arg0.isEmpty()){
         	Object userCredentials = userDAO.loadUserByUsername(arg0);
@@ -65,6 +60,17 @@ public class UserServiceImpl implements UserDetailsService, UserService {
          }
          
          Integer type = userDAO.getUserScaleType(cu.getId());
+         String str = userDAO.getUserRole(cu.getId());
+         if(!str.isEmpty()){
+        	 WebRole role = WebRole.valueOf(str);
+        	 if(role != null)
+        		 cu.setLevel(role);
+        	 else {
+        		 throw new UsernameNotFoundException("WebRole doesn't exist");
+        	 }
+         }else{
+        	 throw new UsernameNotFoundException("WebRole not found");
+         }
          
          cu.setScaleType(type);
          cu.setElevator(elevator);

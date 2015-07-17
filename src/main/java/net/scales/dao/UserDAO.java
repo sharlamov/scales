@@ -18,6 +18,8 @@ public interface UserDAO {
 	public CustomItem getUserElevator(long userId);
 	
 	public int getUserScaleType(long userId);
+
+	public String getUserRole(long userId);
 	
 	public void initContext(CustomUser user);
 }

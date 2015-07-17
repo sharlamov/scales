@@ -18,28 +18,18 @@
 				<table style="width:100%">
 					<tr>
 						<td><span style="font-size: 25px; font-weight: bold; margin-left: 10px;position:relative; float: left;">BASCULA</span></td>
-						<td  style="float: right;"><ui:include	src="menu.xhtml" /></td>
+						<td style="float: right;"><ui:include	src="menu.xhtml" /></td>
 					</tr>
 				</table>
 			</div>
-			<div
-				style="border: 1px solid #cccccc; background: #F2F1F1 repeat-x scroll 0 0; margin-bottom: 10px; border-radius: 5px;">
-				<table style="width:100%">
-					<tr>
-						<td width="40%">
-							<ui:insert name="info">Default info</ui:insert>
-						</td>
-						<td style="margin: 20px; float: right;">
-							
-						</td>
-					</tr>
-				</table>
+			<div class="contentPanel">
+				<ui:insert name="info"/>
 			</div>
 
 		</h:form>
 	</div>
-	<div id="content">
-		<ui:insert name="content">Default content</ui:insert>
-	</div>
+	<p:panel id="data" header="#{contentName}" style="margin-bottom:10px;">
+		<ui:insert name="content"/>
+	</p:panel>
 </h:body>
 </html>

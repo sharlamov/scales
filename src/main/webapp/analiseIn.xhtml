@@ -7,6 +7,8 @@
 	xmlns:tp="http://java.sun.com/jsf/composite/components"
 	xmlns:pe="http://primefaces.org/ui/extensions">
 
+	<ui:param name="contentName" value="Analizele de intrare" />
+
 	<ui:define name="info">
 		<tp:detailPanel customBean="#{laborBeanIn}" doubleDate="false" />
 	</ui:define>
@@ -15,117 +17,112 @@
 		<h:form id="contentForm" autocomplete="off">
 			<f:event type="preRenderView"
 				listener="#{laborBeanIn.initController}" />
-			<p:panel id="data" header="Analizele de intrare"
-				style="margin-bottom:10px;">
+			<p:dataTable var="labor" value="#{laborBeanIn.laborList}" rows="15"
+				id="table" editable="true" paginator="true"
+				currentPageReportTemplate="{currentPage} din {totalPages}"
+				emptyMessage="Nu exista date"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				selection="#{laborBeanIn.selectedLabor}" rowKey="#{labor.nrAnaliz}">
 
-				<p:dataTable var="labor" value="#{laborBeanIn.laborList}" rows="15"
-					id="table" editable="true" paginator="true"
-					currentPageReportTemplate="{currentPage} din {totalPages}"
-					emptyMessage="Nu exista date"
-					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-					selection="#{laborBeanIn.selectedLabor}" rowKey="#{labor.nrAnaliz}">
+				<p:column headerText="№ Analiza">
+					<h:outputText value="#{labor.nrAnaliz}" />
+				</p:column>
 
-					<p:column headerText="№ Analiza">
-						<h:outputText value="#{labor.nrAnaliz}" />
-					</p:column>
+				<p:column headerText="Data analizei #{labor.dateAnaliz}">
+					<h:outputText value="#{labor.dateAnaliz}">
+						<f:convertDateTime pattern="dd.MM.yyyy" />
+					</h:outputText>
+				</p:column>
 
-					<p:column headerText="Data analizei #{labor.dateAnaliz}">
-						<h:outputText value="#{labor.dateAnaliz}">
-							<f:convertDateTime pattern="dd.MM.yyyy" />
-						</h:outputText>
-					</p:column>
+				<p:column headerText="Sezon">
+					<h:outputText value="#{labor.sezon}" />
+				</p:column>
 
-					<p:column headerText="Sezon">
-						<h:outputText value="#{labor.sezon}" />
-					</p:column>
+				<p:column headerText="Cereale">
+					<h:outputText value="#{labor.sc.label}" />
+				</p:column>
 
-					<p:column headerText="Cereale">
-						<h:outputText value="#{labor.sc.label}" />
-					</p:column>
+				<p:column headerText="Umiditate (%)">
+					<h:outputText value="#{labor.anlzVlajn}" />
+				</p:column>
 
-					<p:column headerText="Umiditate (%)">
-						<h:outputText value="#{labor.anlzVlajn}" />
-					</p:column>
+				<p:column headerText="Corpuri Straine(%)">
+					<h:outputText value="#{labor.anlzSorn}" />
+				</p:column>
 
-					<p:column headerText="Corpuri Straine(%)">
-						<h:outputText value="#{labor.anlzSorn}" />
-					</p:column>
+				<p:column headerText="Cereale necuratate(%)">
+					<h:outputText value="#{labor.anlzZernprim}" />
+				</p:column>
 
-					<p:column headerText="Cereale necuratate(%)">
-						<h:outputText value="#{labor.anlzZernprim}" />
-					</p:column>
+				<p:column headerText="Infestare (1-DA, O-NU)">
+					<h:outputText value="#{labor.anlzZaraj}" />
+				</p:column>
 
-					<p:column headerText="Infestare (1-DA, O-NU)">
-						<h:outputText value="#{labor.anlzZaraj}" />
-					</p:column>
+				<p:column headerText="Natura  (g / l)">
+					<h:outputText value="#{labor.anlzNatura}" />
+				</p:column>
 
-					<p:column headerText="Natura  (g / l)">
-						<h:outputText value="#{labor.anlzNatura}" />
-					</p:column>
+				<p:column headerText="IDC% ">
+					<h:outputText value="#{labor.anlzMaslprim}" />
+				</p:column>
 
-					<p:column headerText="IDC% ">
-						<h:outputText value="#{labor.anlzMaslprim}" />
-					</p:column>
+				<p:column headerText="Gluten">
+					<h:outputText value="#{labor.anlzKleik}" />
+				</p:column>
 
-					<p:column headerText="Gluten">
-						<h:outputText value="#{labor.anlzKleik}" />
-					</p:column>
+				<p:column headerText="Germinatie  (%)">
+					<h:outputText value="#{labor.sanlzSorn}" />
+				</p:column>
 
-					<p:column headerText="Germinatie  (%)">
-						<h:outputText value="#{labor.sanlzSorn}" />
-					</p:column>
+				<p:column headerText="Aciditate">
+					<h:outputText value="#{labor.anlzKislot}" />
+				</p:column>
 
-					<p:column headerText="Aciditate">
-						<h:outputText value="#{labor.anlzKislot}" />
-					</p:column>
+				<p:column headerText="Clasacereale">
+					<h:outputText value="#{labor.partida}" />
+				</p:column>
 
-					<p:column headerText="Clasacereale">
-						<h:outputText value="#{labor.partida}" />
-					</p:column>
+				<p:column headerText="% de cereale (cob/stiulete)">
+					<h:outputText value="#{labor.anlzVihod}" />
+				</p:column>
 
-					<p:column headerText="% de cereale (cob/stiulete)">
-						<h:outputText value="#{labor.anlzVihod}" />
-					</p:column>
+				<p:column headerText="Boabe defecte  sparte">
+					<h:outputText value="#{labor.anlzBitoeZerno}" />
+				</p:column>
 
-					<p:column headerText="Boabe defecte  sparte">
-						<h:outputText value="#{labor.anlzBitoeZerno}" />
-					</p:column>
+				<p:column headerText="№ certificat">
+					<h:outputText value="#{labor.nrSert}" />
+				</p:column>
 
-					<p:column headerText="№ certificat">
-						<h:outputText value="#{labor.nrSert}" />
-					</p:column>
+				<p:column headerText="Furnizor">
+					<h:outputText value="#{labor.postav}" />
+				</p:column>
 
-					<p:column headerText="Furnizor">
-						<h:outputText value="#{labor.postav}" />
-					</p:column>
+				<p:column headerText="Transportator">
+					<h:outputText value="#{labor.otpravit}" />
+				</p:column>
 
-					<p:column headerText="Transportator">
-						<h:outputText value="#{labor.otpravit}" />
-					</p:column>
+				<p:column headerText="Comentariu">
+					<h:outputText value="#{labor.comment}" />
+				</p:column>
 
-					<p:column headerText="Comentariu">
-						<h:outputText value="#{labor.comment}" />
-					</p:column>
-
-					<p:column headerText="Actions" style="text-align: center;width:3%;">
-						<p:commandButton icon="ui-icon-pencil" title="Editare"
-							oncomplete="setDialogName('Editare'); PF('editDialog').show();"
-							immediate="true" update=":formDlg1:editDialog" process="@this"
-							global="false"
-							actionListener="#{laborBeanIn.openEditForm(labor)}">
+				<p:column headerText="Actions" style="text-align: center;width:3%;">
+					<p:commandButton icon="ui-icon-pencil" title="Editare"
+						oncomplete="setDialogName('Editare'); PF('editDialog').show();"
+						immediate="true" update=":formDlg1:editDialog" process="@this"
+						global="false" actionListener="#{laborBeanIn.openEditForm(labor)}">
+					</p:commandButton>
+					<f:facet name="footer">
+						<p:commandButton id="addButton" icon="ui-icon-plus"
+							styleClass="regCommandButton"
+							oncomplete="setDialogName('Adauga'); PF('editDialog').show();"
+							update=":formDlg1:editDialog" process="@this" global="false">
+							<f:setPropertyActionListener value="#{laborBeanIn.newLabor}"
+								target="#{laborBeanIn.selectedLabor}" />
 						</p:commandButton>
-						<f:facet name="footer">
-							<p:commandButton id="addButton" icon="ui-icon-plus"
-								styleClass="regCommandButton"
-								oncomplete="setDialogName('Adauga'); PF('editDialog').show();"
-								update=":formDlg1:editDialog" process="@this" global="false">
-								<f:setPropertyActionListener value="#{laborBeanIn.newLabor}"
-									target="#{laborBeanIn.selectedLabor}" />
-							</p:commandButton>
-						</f:facet>
-					</p:column>
-				</p:dataTable>
-			</p:panel>
+					</f:facet>
+				</p:column>
+			</p:dataTable>
 		</h:form>
 		<h:form id="formDlg1">
 			<p:dialog header="Edit" id="editDialog" widgetVar="editDialog"

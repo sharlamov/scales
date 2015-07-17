@@ -62,6 +62,13 @@ public class UserDAOImpl implements UserDAO {
 		return Integer.parseInt(query.uniqueResult().toString());
 	}
 	
+	public String getUserRole(long userId) {
+		String sql = " select max(value) from a$users$v a, A$ADP$v v where a.ID=:userId and v.obj_id=a.obj_id and KEY='WEB_USER_ROLE' ";
+		Query query = currentSession().createSQLQuery(sql).setLong("userId",userId);
+		Object obj = query.uniqueResult();
+		return  obj == null ? "" : obj.toString().trim().toUpperCase();
+	}
+	
 	public void initContext(CustomUser user){
 		String sql = " begin "
 				+ "envun4.envsetvalue('PARAM_USERID',:userId); "
