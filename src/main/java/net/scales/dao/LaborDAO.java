@@ -10,9 +10,9 @@ import org.hibernate.HibernateException;
 
 public interface LaborDAO {
 
-	public List<Object> getLaborsByPeriod(Date date);
+	public List<Object> getLaborsByPeriod(Date date, Long elevatorId);
 	
-	public List<Object> getLaborsOutByDate(Date date);
+	public List<Object> getLaborsOutByDate(Date date, Long elevatorId);
 
 	public void updateLabor(Labor data, Labor oldData) throws HibernateException, SQLException;
 

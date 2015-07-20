@@ -78,6 +78,7 @@ public class LaborBeanIn extends AbstractBean {
 			} else {
 				laborService.updateLabor(selectedLabor, oldLabor,
 						getLoggedUser());
+				setOldLabor(null);
 			}
 		} catch (Exception e) {
 			FacesContext context = FacesContext.getCurrentInstance();
@@ -86,8 +87,6 @@ public class LaborBeanIn extends AbstractBean {
 			context.addMessage(null, message);
 			context.validationFailed();
 			e.printStackTrace();
-		} finally {
-			setOldLabor(null);
 		}
 	}
 

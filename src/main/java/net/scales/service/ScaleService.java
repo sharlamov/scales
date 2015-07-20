@@ -9,9 +9,9 @@ import net.scales.model.Scales;
 
 public interface ScaleService {
 
-	public List<Scales> getScalesListByPeriod(Date date1, Date date2);
+	public List<Scales> getScalesListByPeriod(Date date1, Date date2, Long elevatorId);
 
-	public List<Scales> getScalesInByPeriod(Date date1, Date date2);
+	public List<Scales> getScalesInByPeriod(Date date1, Date date2, Long elevatorId);
 
 	public void updateScale(Scales data, CustomUser user) throws Exception;
 

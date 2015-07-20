@@ -10,9 +10,9 @@ import org.hibernate.HibernateException;
 
 public interface ScaleDAO {
 
-	public List<Object> getScalesListByPeriod(Date date, Date date2);
+	public List<Object> getScalesListByPeriod(Date date, Date date2, Long elevatorId);
 
-	public List<Object> getScalesInByPeriod(Date date1, Date date2);
+	public List<Object> getScalesInByPeriod(Date date1, Date date2, Long elevatorId);
 
 	public List<Object> getUniversList(String tip, String gr1);
 

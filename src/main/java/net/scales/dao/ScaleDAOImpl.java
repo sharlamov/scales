@@ -23,24 +23,26 @@ public class ScaleDAOImpl extends AbstractDAOImpl implements ScaleDAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Object> getScalesListByPeriod(Date date1, Date date2) {
+	public List<Object> getScalesListByPeriod(Date date1, Date date2, Long elevatorId) {
 		String sql = "SELECT ID, SOFER, NR_VAGON,NR_REMORCA, DEP_PEREVOZ, nvl(CLCDEP_PEREVOZ, DEP_PEREVOZ_TEXT), "
 				+ "DEP_DESTINAT ,nvl(CLCDEP_DESTINATT, DEP_DESTINAT_TEXT),	PRAZGRUZ_S_12 ,CLCPRAZGRUZ_S_12T, PUNCTTO_S_12 ,CLCPUNCTTO_S_12T, SC, CLCSCT, "
 				+ "SEZON_YYYY,	TTN_N, TTN_DATA, NR_ANALIZ,	MASA_BRUTTO_RO,	MASA_TARA_RO, TIME_IN, TIME_OUT, "
-				+ "ELEVATOR, CLCELEVATORT,	USERID,	DIV	FROM ytrans_VTF_PROHODN_OUT where TRUNC(TIME_IN,'DD') between TRUNC(to_date(:FDATA1),'DD') and TRUNC(to_date(:FDATA2),'DD')	ORDER BY id ";
+				+ "ELEVATOR, CLCELEVATORT,	USERID,	DIV	FROM ytrans_VTF_PROHODN_OUT "
+				+ "where elevator=:elevator and TRUNC(TIME_IN,'DD') between TRUNC(to_date(:FDATA1),'DD') and TRUNC(to_date(:FDATA2),'DD') ORDER BY id ";
 		return currentSession().createSQLQuery(sql).setDate("FDATA1", date1)
-				.setDate("FDATA2", date2).list();
+				.setDate("FDATA2", date2).setLong("elevator", elevatorId).list();
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Object> getScalesInByPeriod(Date date1, Date date2) {
+	public List<Object> getScalesInByPeriod(Date date1, Date date2, Long elevatorId) {
 		String sql = "SELECT ID, SOFER, AUTO,NR_REMORCA, DEP_POSTAV, "
 				+ "decode(DEP_POSTAV,(select value from a$env where name = 'DEF_FURNIZOR'),DEP_POSTAV_TEXT,CLCDEP_POSTAVT), "
 				+ "PPOGRUZ_S_12  ,CLCPPOGRUZ_S_12T, SC_MP, CLCSC_MPT, "
-				+ "SEZON_YYYY,	TTN_N, TTN_DATA, MASA_TTN, NR_ANALIZ,DEP_TRANSP ,nvl(CLCDEP_TRANSPT, DEP_TRANSP_TEXT),	MASA_BRUTTO,	MASA_TARA, TIME_IN, TIME_OUT,DIV, "
-				+ "ELEVATOR, CLCELEVATORT,	USERID	FROM VTF_PROHODN_MPFS where TRUNC(TIME_IN,'DD') between TRUNC(to_date(:FDATA1),'DD') and TRUNC(to_date(:FDATA2),'DD')	ORDER BY id ";
+				+ "SEZON_YYYY,	TTN_N, TTN_DATA, MASA_TTN, NR_ANALIZ,DEP_TRANSP ,nvl(CLCDEP_TRANSPT, DEP_TRANSP_TEXT),	MASA_BRUTTO, MASA_TARA, TIME_IN, TIME_OUT,DIV, "
+				+ "ELEVATOR, CLCELEVATORT,	USERID	FROM VTF_PROHODN_MPFS "
+				+ "where elevator=:elevator and TRUNC(TIME_IN,'DD') between TRUNC(to_date(:FDATA1),'DD') and TRUNC(to_date(:FDATA2),'DD') ORDER BY id ";
 		return currentSession().createSQLQuery(sql).setDate("FDATA1", date1)
-				.setDate("FDATA2", date2).list();
+				.setDate("FDATA2", date2).setLong("elevator", elevatorId).list();
 	}
 
 	@SuppressWarnings("unchecked")

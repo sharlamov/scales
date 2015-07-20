@@ -25,8 +25,8 @@ public class ScaleServiceImpl implements ScaleService {
 	@Autowired
 	private UserDAO userDAO;
 
-	public List<Scales> getScalesListByPeriod(Date date1, Date date2) {
-		List<Object> list = scalesDataDAO.getScalesListByPeriod(date1, date2);
+	public List<Scales> getScalesListByPeriod(Date date1, Date date2, Long elevatorId) {
+		List<Object> list = scalesDataDAO.getScalesListByPeriod(date1, date2, elevatorId);
 		List<Scales> newlist = new ArrayList<Scales>(list.size());
 		for (Object obj : list) {
 			newlist.add(convertToScalesDataOut(obj));
@@ -34,8 +34,8 @@ public class ScaleServiceImpl implements ScaleService {
 		return newlist;
 	}
 
-	public List<Scales> getScalesInByPeriod(Date date1, Date date2) {
-		List<Object> list = scalesDataDAO.getScalesInByPeriod(date1, date2);
+	public List<Scales> getScalesInByPeriod(Date date1, Date date2, Long elevatorId) {
+		List<Object> list = scalesDataDAO.getScalesInByPeriod(date1, date2, elevatorId);
 		List<Scales> newlist = new ArrayList<Scales>(list.size());
 		for (Object obj : list) {
 			newlist.add(convertToScalesDataIn(obj));

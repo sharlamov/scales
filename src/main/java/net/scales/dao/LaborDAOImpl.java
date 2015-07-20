@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 public class LaborDAOImpl extends AbstractDAOImpl implements LaborDAO {
 
 	@SuppressWarnings("unchecked")
-	public List<Object> getLaborsByPeriod(Date date) {
+	public List<Object> getLaborsByPeriod(Date date, Long elevatorId) {
 		String sql = "select sezon_yyyy, nr_analiz, trunc(data_analiz), anlz_vlajn, anlz_sorn, "
 				+ "anlz_kislot, anlz_zernprim, anlz_zaraj, anlz_maslprim, "
 				+ "sanlz_vlajn, sanlz_sorn, sanlz_kislot, sanlz_zernprim, "
@@ -25,13 +25,13 @@ public class LaborDAOImpl extends AbstractDAOImpl implements LaborDAO {
 				+ "from VTF_LABOR_MP "
 				+ "where to_date(:cdate) between to_date(to_char('14.06')||'.'||to_char(sezon_yyyy)) "
 				+ "and to_date(to_char('14.06')||'.'||to_char(sezon_yyyy+1)) and div=un$div.get_def() "
-				+ "and NR_ANALIZ>0";
-		return currentSession().createSQLQuery(sql).setDate("cdate", date)
+				+ "and NR_ANALIZ>0 and elevator = :elevator ";
+		return currentSession().createSQLQuery(sql).setDate("cdate", date).setLong("elevator", elevatorId)
 				.list();
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Object> getLaborsOutByDate(Date date) {
+	public List<Object> getLaborsOutByDate(Date date, Long elevatorId) {
 		String sql = "select sezon_yyyy, nr_analiz, trunc(data_analiz), anlz_vlajn, anlz_sorn, "
 				+ "anlz_kislot, anlz_zernprim, anlz_zaraj, anlz_maslprim, "
 				+ "sanlz_vlajn, sanlz_sorn, sanlz_kislot, sanlz_zernprim, "
@@ -42,8 +42,8 @@ public class LaborDAOImpl extends AbstractDAOImpl implements LaborDAO {
 				+ "from VTF_LABOR_MP "
 				+ "where to_date(:cdate) between to_date(to_char('19.06')||'.'||to_char(sezon_yyyy)) "
 				+ "and to_date(to_char('18.06')||'.'||to_char(sezon_yyyy+1)) and div=un$div.get_def() "
-				+ "and nvl(PRIZNAK_ARM,0)<>20 and NR_ANALIZ between -200000 and 0 ";
-		return currentSession().createSQLQuery(sql).setDate("cdate", date)
+				+ "and nvl(PRIZNAK_ARM,0)<>20 and elevator = :elevator and NR_ANALIZ between -200000 and 0 ";
+		return currentSession().createSQLQuery(sql).setDate("cdate", date).setLong("elevator", elevatorId)
 				.list();
 	}
 

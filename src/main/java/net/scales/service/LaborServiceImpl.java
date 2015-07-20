@@ -30,7 +30,7 @@ public class LaborServiceImpl implements LaborService {
 	public List<Labor> getLaborsByPeriod(Date date, CustomUser user) {
 		userDAO.initContext(user);
 		
-		List<Object> list = laborDAO.getLaborsByPeriod(date);
+		List<Object> list = laborDAO.getLaborsByPeriod(date, user.getElevator().getId());
 		List<Labor> newlist = new ArrayList<Labor>(list.size());
 		for (Object obj : list) {
 			newlist.add(convertToLabor(obj));
@@ -41,7 +41,7 @@ public class LaborServiceImpl implements LaborService {
 	public List<Labor> getLaborOut(Date date, CustomUser user) {
 		userDAO.initContext(user);
 		
-		List<Object> list = laborDAO.getLaborsOutByDate(date);
+		List<Object> list = laborDAO.getLaborsOutByDate(date, user.getElevator().getId());
 		List<Labor> newlist = new ArrayList<Labor>(list.size());
 		for (Object obj : list) {
 			newlist.add(convertToLabor(obj));

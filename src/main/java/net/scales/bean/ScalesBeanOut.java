@@ -37,7 +37,7 @@ public class ScalesBeanOut extends AbstractBean {
 
 	public void dateChangeHandler() {
 		setScalesList(scaleService.getScalesListByPeriod(getStartDate(),
-				getEndDate()));
+				getEndDate(), getLoggedUser().getElevator().getId()));
 	}
 
 	public Scales getNewScale() {
